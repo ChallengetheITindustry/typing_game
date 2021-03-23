@@ -8,11 +8,34 @@
         count = 0;
     }
 
-    const words = ['white', 'orange', 'green', 'black', 'blue', 'red'];
+    const words = [
+        'html',
+        'head',
+        'meta',
+        'title',
+        'link',
+        'body',
+        'section',
+        'div',
+        'header',
+        'footer',
+        'h1',
+        'a',
+        'img',
+        'p',
+        'table',
+        'th',
+        'tr',
+        'td',
+        'script',
+        'style'
+    ];
+
     let count = 0;
     let word;
     let startTime;
     let isPlaying = false;
+    let mistake = 0;
 
     document.addEventListener('keydown', (e) => {
         if (isPlaying === true) {
@@ -35,6 +58,7 @@
 
     document.addEventListener('keydown', (e) => {
         if (e.key !== word[count]) {
+            mistake++;
             const body = document.querySelector('body')
             body.classList.add('warn')
             setTimeout(function () {
@@ -55,19 +79,17 @@
                 target.textContent = `Finished!!`
                 result.textContent = `${stopTime}seconds`
 
+                const miss = document.createElement('p');
+                miss.textContent = `${mistake} mistakes`;
+                document.querySelector('span').appendChild(miss);
 
-                const change = document.createElement('p');
-                change.textContent = '3';
-                setTimeout(function () {
-                    change.textContent = '2';
-                    setTimeout(function () {
-                        change.textContent = '1';
-                        setTimeout(function () {
-                            document.location.reload();
-                        }, 1000)
-                    }, 1000);
-                }, 1000);
-                result.appendChild(change);
+                const load = document.createElement('p');
+                load.textContent = "back";
+                load.classList.add('load')
+                load.addEventListener('click', () => {
+                    document.location.reload();
+                })
+                result.appendChild(load);
             }
         }
 
